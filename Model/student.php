@@ -7,13 +7,13 @@ class Student extends Entity
     private string $name;
     private string $email;
     private string $class;
-    private string $teacher;
+    private string $assignedTeacher;
 
-    public function __construct(string $name, string $email, string $class, string $teacher) {
+    public function __construct(string $name, string $email, string $class, string $assignedTeacher) {
         $this->name = $name;
         $this->email = $email;
         $this->class = $class;
-        $this->teacher = $teacher;
+        $this->assignedTeacher = $assignedTeacher;
     }
 
     /**
@@ -43,9 +43,8 @@ class Student extends Entity
     /**
      * @return string
      */
-    public function getTeacher(): string
+    public function getAssignedTeacher(): string
     {
-        return $this->teacher;
+        return $this->assignedTeacher;
     }
-
 }

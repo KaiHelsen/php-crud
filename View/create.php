@@ -10,22 +10,19 @@ if (isset($_POST['submit'])) {
         return $data;
     }
 
-    $name = validate($_POST['name']);
+    $firstname = validate($_POST['firstname']);
+    $lastname = validate($_POST['lastname']);
     $email = validate($_POST['email']);
-    $password = validate($_POST['password']);
 
-    $user_data = 'name = '.$name.' email = '.$email.' & password = '.$password;
+    $user_data = 'firstname = '.$firstname.' lastname = '.$lastname.' & email address = '.$email;
 
-    if (empty($name)) {
-        header("location:create.php?error= name is required&$user_data");
+    if (empty($firstname)) {
+        header("location:create.php?error= firstname is required&$user_data");
+    } else if (empty($lastname)) {
+        header("location:create.php?error= lastname is required&$user_data");
     } else if (empty($email)) {
         header("location:create.php?error= email is required&$user_data");
-    } else if (empty($password)) {
-        header("location:create.php?error= password is required&$user_data");
     } else {
-        /*$sql = "INSERT INTO user(name, email, password)
-                VALUES($name, $email, $password)";
-        $result = mysqli_query($conn, $sql);*/
         echo "Success" ;
     }
 }
@@ -48,25 +45,25 @@ if (isset($_POST['submit'])) {
     <form action="" method="POST">
         <h4 class="display-4 text-center">Create</h4><hr><br/>
         <?php if (isset($_GET['error'])) {?>
-        <div class="alert alert-danger" role="alert">
-            <?php echo $_GET['error'] ?>
-        </div>
+            <div class="alert alert-danger" role="alert">
+                <?php echo $_GET['error'] ?>
+            </div>
         <?php } ?>
         <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name"
+            <label for="firstname">Firstname</label>
+            <input type="text" class="form-control" id="firstname" name="firstname"
                    value="<?php if(isset($_GET['firstname'])) echo ($_GET['firstname']); ?>"
-                   placeholder="Enter your name">
+                   placeholder="Enter your firstname">
+        </div>
+
+        <div class="form-group">
+            <label for="lastname">Lastname</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter your lastname">
         </div>
 
         <div class="form-group">
             <label for="email">Email</label>
             <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email">
-        </div>
-
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="text" class="form-control" id="password" name="password" placeholder="Enter your password">
         </div>
 
         <button type="submit" class="btn btn-primary" name="submit">Submit</button>

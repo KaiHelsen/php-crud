@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 include_once "Loader.php";
-include_once "Model/SchoolClass.php";
+include_once "Model/student.php";
 
-class ClassLoader extends Loader
+class StudentLoader extends Loader
 {
     private string $serverName = 'localhost';
     private string $username = 'root';
@@ -11,8 +11,9 @@ class ClassLoader extends Loader
     private string $db = 'crud';
 
 
+    private StudentClass $student;
 
-    private array $classes = [];
+    private array $students = [];
 
 
     public function __construct()
@@ -22,7 +23,6 @@ class ClassLoader extends Loader
 
     public function connect(): ?PDO
     {
-
 
 
         //driver options array
@@ -64,7 +64,7 @@ class ClassLoader extends Loader
     {
         $pdo = $this->connect();
 
-        $handle = $pdo->prepare('SELECT * FROM crud.class ORDER BY class.id');
+        $handle = $pdo->prepare('SELECT * FROM crud.student ORDER BY student.id');
         $handle->execute();
         return $handle->fetchAll();
     }
@@ -74,7 +74,7 @@ class ClassLoader extends Loader
         $id = (int)abs($id);
         $pdo = $this->connect();
 
-        $handle = $pdo->prepare('SELECT * FROM crud.class WHERE class.id = :id ORDER BY class.id');
+        $handle = $pdo->prepare('SELECT * FROM crud.student WHERE student.id = :id ORDER BY student.id');
         $handle->bindValue(':id', $id);
         $handle->execute();
         return $handle->fetchAll();

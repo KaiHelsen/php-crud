@@ -15,7 +15,7 @@ declare(strict_types=1);
     <title>Document</title>
 </head>
 <body>
-<div class="container">
+<!--<div class="container">
     <div class="box">
         <h4 class="display-4 text-center">Student</h4>
         <table class="table">
@@ -45,7 +45,58 @@ declare(strict_types=1);
         </div>
 
     </div>
-</div>
+</div>-->
+
+<section>
+    <b>Testing class overview</b>
+    <!--here we should generate an overview of classes that are loaded from the database -->
+    <table>
+        <thead>
+
+
+        </thead>
+        <tbody>
+        <?php //foreach ($students as $i => $myStudent) : ?>
+        <tr>
+            <!--<td>Line <?php//echo $i; ?> </td>-->
+
+        <tr>
+            <th>id</th>
+            <th>Class Name</th>
+            <th>Assigned Teacher</th>
+            <th>location</th>
+        </tr>
+
+        <tbody>
+        <?php var_dump($data) ?>
+        <?php foreach ($data as $i => $myStudent) : ?>
+            <tr>
+                <td>Line <?php echo $i; ?> </td>
+                <td><?php echo $myStudent['firstname']; ?> </td>
+                <td><?php echo $myStudent['lastname']; ?> </td>
+                <td><?php echo $myStudent['email']; ?> </td>
+                <td><a href="?id=<?php echo $myStudent['id']; ?>"></a></td>
+
+                <td><form method='GET'>
+                        <input type="hidden" name="page" value="<?php echo htmlspecialchars($_GET['page'])?>">
+                        <button type="submit" name="id" value="<?php echo $myStudent['id'];?>">more info</button>
+                    </form></td>
+                <td><form method='GET'>
+                        <input type="hidden" name="page" value="<?php echo htmlspecialchars($_GET['page'])?>">
+                        <input type="hidden" name="edit">
+                        <button type="submit" name="id" value="<?php echo $myStudent['id'];?>">edit</button>
+                    </form></td>
+                <td><form method='POST'>
+                        <input type="hidden" name="page" value="<?php echo htmlspecialchars($_GET['page'])?>">
+                        <button type="submit" name="id" value="<?php echo $myStudent['id'];?>">delete</button>
+                    </form></td>
+
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+</section>
 
 </body>
 </html>

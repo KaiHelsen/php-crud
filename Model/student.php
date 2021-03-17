@@ -4,24 +4,33 @@ include_once "Entity.php";
 
 class Student extends Entity
 {
-    private string $name;
+    private string $firstname;
+    private string $lastname;
     private string $email;
-    private string $class;
-    private string $assignedTeacher;
 
-    public function __construct(string $name, string $email, string $class, string $assignedTeacher) {
-        $this->name = $name;
+
+    public function __construct(string $fitstname, string $lastname, string $email)
+    {
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
         $this->email = $email;
-        $this->class = $class;
-        $this->assignedTeacher = $assignedTeacher;
+
     }
 
     /**
      * @return string
      */
-    public function getName(): string
+    public function getFirstname(): string
     {
-        return $this->name;
+        return $this->firstname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastname(): string
+    {
+        return $this->lastname;
     }
 
     /**
@@ -30,21 +39,5 @@ class Student extends Entity
     public function getEmail(): string
     {
         return $this->email;
-    }
-
-    /**
-     * @return string
-     */
-    public function getClass(): string
-    {
-        return $this->class;
-    }
-
-    /**
-     * @return string
-     */
-    public function getAssignedTeacher(): string
-    {
-        return $this->assignedTeacher;
     }
 }

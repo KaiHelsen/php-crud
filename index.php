@@ -67,10 +67,6 @@ $controller->render($_GET, $_POST);
 
 
 
-        default:
-            $controller = new HomepageController();
-            break;
-    }
-}
+
 
 

@@ -22,7 +22,7 @@ include_once "includes/header.php";
             <th>Assigned Teacher</th>
             <th>location</th>
         </tr>
-        </thead>
+
         <tbody>
         <?php foreach ($data as $i => $myClass) : ?>
             <tr>
@@ -57,3 +57,4 @@ include_once "includes/header.php";
 <?php require 'includes/footer.php' ?>
 
 <?php require 'includes/footer.php'; ?>
+

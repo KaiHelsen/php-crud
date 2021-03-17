@@ -10,19 +10,22 @@ if (isset($_POST['submit'])) {
         return $data;
     }
 
-    $firstname = validate($_POST['firstname']);
-    $lastname = validate($_POST['lastname']);
+    $name = validate($_POST['name']);
     $email = validate($_POST['email']);
+    $password = validate($_POST['password']);
 
-    $user_data = 'firstname = '.$firstname.' lastname = '.$lastname.' & email address = '.$email;
+    $user_data = 'name = '.$name.' email = '.$email.' & password = '.$password;
 
-    if (empty($firstname)) {
-        header("location:create.php?error= firstname is required&$user_data");
-    } else if (empty($lastname)) {
-        header("location:create.php?error= lastname is required&$user_data");
+    if (empty($name)) {
+        header("location:create.php?error= name is required&$user_data");
     } else if (empty($email)) {
         header("location:create.php?error= email is required&$user_data");
+    } else if (empty($password)) {
+        header("location:create.php?error= password is required&$user_data");
     } else {
+        /*$sql = "INSERT INTO user(name, email, password)
+                VALUES($name, $email, $password)";
+        $result = mysqli_query($conn, $sql);*/
         echo "Success" ;
     }
 }
@@ -50,20 +53,20 @@ if (isset($_POST['submit'])) {
         </div>
         <?php } ?>
         <div class="form-group">
-            <label for="firstname">Firstname</label>
-            <input type="text" class="form-control" id="firstname" name="firstname"
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name"
                    value="<?php if(isset($_GET['firstname'])) echo ($_GET['firstname']); ?>"
-                   placeholder="Enter your firstname">
-        </div>
-
-        <div class="form-group">
-            <label for="lastname">Lastname</label>
-            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter your lastname">
+                   placeholder="Enter your name">
         </div>
 
         <div class="form-group">
             <label for="email">Email</label>
             <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" class="form-control" id="password" name="password" placeholder="Enter your password">
         </div>
 
         <button type="submit" class="btn btn-primary" name="submit">Submit</button>

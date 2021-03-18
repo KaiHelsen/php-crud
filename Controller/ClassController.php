@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 include_once 'Controller.php';
+include_once 'Utilities/Exporter.php';
 include_once 'loaders/ClassLoader.php';
-
+include_once 'loaders/TeacherLoader.php';
 
 class ClassController extends Controller
 {
@@ -16,46 +17,74 @@ class ClassController extends Controller
         //  and then use that to vary between pages
         //  for now, we stick with the overview.
 
-        //start up loader
-        $loader = new ClassLoader();
-        $pdo = $loader->connect();
-
-        $handle = $pdo->prepare('SELECT className, location FROM crud.class ORDER BY class.id');
-        $handle->execute();
-        $classes = $handle->fetchAll();
-
-        //TODO: Implement render() method.
-        require 'View/ClassesOverview.php';
-
-        //var_dump($GET);
-        //var_dump($POST);
-        $loader = new ClassLoader(); //see about fitting all the upcoming logic into the loader class directly.
-
+//        var_dump($GET);
+//        echo("POST: ");
+//        var_dump($POST);
+        $classLoader = new ClassLoader(); //see about fitting all the upcoming logic into the loader class directly.
+        $teacherLoader = new TeacherLoader();
         //var_dump($loader->fetchSingle(1));
+        //TODO: Implement delete() method.
 
-        //TODO: Implement render() method.
-        if (!isset($_GET['id']))
+        //check if an item is to be deleted, then delete it.
+        if (isset($POST['delete'], $POST['id']))
         {
-            //go to class overview page
-            $data = $loader->fetchall();  //fetch ALL rows
-            require 'View/ClassesOverview.php';
+            $classLoader->deleteEntry((int)$POST['id']);
+            unset($GET['id']);
         }
-        else
+        if (isset($POST['edit'], $POST['id']))
         {
-            $data = $loader->fetchSingle((int)$GET['id']);
-            if (!isset($_GET['edit']))
+            $newClass = new SchoolClass((int)$POST['id'], $POST['name'], $POST['teacher'], $POST['location']);
+            $classLoader->UpdateEntry($newClass);
+        }
+        if (isset($POST['create']))
+        {
+            $newClass = new SchoolClass(0, $POST['name'], $POST['teacher'], $POST['location']);
+            $classLoader->addEntry($newClass);
+        }
+
+        if (!isset($GET['id']))
+        {
+            if (isset($GET['export']) && $GET['export'] === 'CSV')
             {
-                //go to class detail page
-                $data = $loader->fetchSingle((int)$GET['id']);
-                require 'View/ClassesDetailView.php';
+                //export CSV file
+                //Exporter utility class will handle all the hard work for you
+                $exporter = new Exporter();
+                $exporter->exportCSV($classLoader->fetchAll(), 'classes');
+            }
+
+            if (isset($GET['create']))
+            {
+                //go to new class page
+                //this reference to teacherData is needed to create a list of teachers that you can pick from, otherwise it'll cause problems.
+                $teacherData = $teacherLoader->fetchAll();
+                require 'View/ClassesNewView.php';
             }
             else
             {
-                //go to class edit page
-                $data = $loader->fetchSingle((int)$GET['id']);
-            require 'View/ClassesEditView.php';
+                //go to class overview page
+                $data = $classLoader->fetchall();  //fetch ALL rows
+                require 'View/ClassesOverview.php';
             }
         }
-
+        else
+        {
+            $data = $classLoader->fetchSingle((int)$GET['id']);
+            $data = $data[0];
+            if (isset($GET['edit']))
+            {
+                //go to edit page
+                $teacherData = $teacherLoader->fetchAll();
+                //go to class edit page
+                require 'View/ClassesEditView.php';
+            }
+            else
+            {
+                $teacherData = $teacherLoader->fetchAll();
+                //TODO: needs a function from studentLoader that can give me all students in a specific class.
+                //      Should be able to take an ID parameter and work from there.
+                //go to class edit page
+                require 'View/ClassesDetailView.php';
+            }
+        }
     }
 }

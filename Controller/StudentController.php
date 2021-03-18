@@ -17,7 +17,7 @@ public function render(array $GET, array $POST): void
     $loader = new StudentLoader();
     $pdo = $loader->connect();
 
-    $handle = $pdo->prepare('SELECT firstname, FROM crud.student ORDER BY student.id');
+    $handle = $pdo->prepare('SELECT firstname FROM crud.student ORDER BY student.id');
     $handle->execute();
     $students = $handle->fetchAll();
 

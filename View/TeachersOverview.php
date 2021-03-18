@@ -15,23 +15,33 @@ include_once "includes/header.php";
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($teachers as $i => $myTeacher) : ?>
+        <?php foreach ($data  as $i => $myTeacher) : ?>
             <tr>
                 <td>Line <?php echo $i; ?> </td>
                 <td><?php echo $myTeacher['firstName']; ?> </td>
                 <td><?php echo $myTeacher['lastName']; ?> </td>
                 <td><?php echo $myTeacher['email']; ?> </td>
                 <td><a href="?id=<?php echo $myTeacher['id'] ?>"></a></td>
-                <td><form method = 'POST'>
+
+                <td><form method='GET'>
                         <input type="hidden" name="page" value="<?php echo htmlspecialchars($_GET['page'])?>">
+                        <button type="submit" name="id" value="<?php echo $myTeacher['id'];?>">more info</button>
+                    </form></td>
+
+                <td><form method = 'GET'>
+                        <input type="hidden" name="page" value="<?php echo htmlspecialchars($_GET['page'])?>">
+                        <input type="hidden" name="edit">
                         <button type="submit" name="id" value="<?php echo $myTeacher['id'];?>">edit</button>
                     </form></td>
-                <td><form method = 'get'>
+                <td><form method='POST'>
                         <input type="hidden" name="page" value="<?php echo htmlspecialchars($_GET['page'])?>">
+                        <input type="hidden" name="delete">
                         <button type="submit" name="id" value="<?php echo $myTeacher['id'];?>">delete</button>
                     </form></td>
             </tr>
         <?php endforeach; ?>
+        <br>
+        <a href="?page=teachers&create=">create new?</a>
         </tbody>
     </table>
 

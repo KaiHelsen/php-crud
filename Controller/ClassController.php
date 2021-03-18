@@ -1,9 +1,10 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 include_once 'Controller.php';
+include_once 'loaders/ClassLoader.php';
 include_once 'loaders/TeacherLoader.php';
 
-class TeacherController extends Controller
+class ClassController extends Controller
 {
 
     public function render(array $GET, array $POST): void
@@ -15,28 +16,29 @@ class TeacherController extends Controller
         //  and then use that to vary between pages
         //  for now, we stick with the overview.
 
-        //var_dump($GET);
-        //var_dump($POST);
-        $teacherLoader = new TeacherLoader(); //see about fitting all the upcoming logic into the loader class directly.
-        $classLoader = new ClassLoader();
+//        var_dump($GET);
+//        echo("POST: ");
+//        var_dump($POST);
+        $classLoader = new ClassLoader(); //see about fitting all the upcoming logic into the loader class directly.
+        $teacherLoader = new TeacherLoader();
         //var_dump($loader->fetchSingle(1));
+        //TODO: Implement delete() method.
 
-        //TODO: Implement render() method.
         //check if an item is to be deleted, then delete it.
         if (isset($POST['delete'], $POST['id']))
         {
-            $teacherLoader->deleteEntry((int)$POST['id']);
+            $classLoader->deleteEntry((int)$POST['id']);
             unset($GET['id']);
         }
         if (isset($POST['edit'], $POST['id']))
         {
-            $newClass = new Teacher((int)$POST['id'], $POST['firstName'], $POST['lastName'], $POST['email']);
-            $teacherLoader->UpdateEntry($newClass);
+            $newClass = new SchoolClass((int)$POST['id'], $POST['name'], $POST['teacher'], $POST['location']);
+            $classLoader->UpdateEntry($newClass);
         }
         if (isset($POST['create']))
         {
-            $newClass = new Teacher(0, $POST['firstName'], $POST['lastName'], $POST['email']);
-            $teacherLoader->addEntry($newClass);
+            $newClass = new SchoolClass(0, $POST['name'], $POST['teacher'], $POST['location']);
+            $classLoader->addEntry($newClass);
         }
 
 
@@ -46,31 +48,31 @@ class TeacherController extends Controller
             {
                 //go to new class page
                 $teacherData = $teacherLoader->fetchAll();
-                require 'View/TeachersNewView.php';
+                require 'View/ClassesNewView.php';
             }
             else
             {
                 //go to class overview page
-                $data = $teacherLoader->fetchall();  //fetch ALL rows
-                require 'View/TeachersOverview.php';
+                $data = $classLoader->fetchall();  //fetch ALL rows
+                require 'View/ClassesOverview.php';
             }
         }
         else
         {
-            $data = $teacherLoader->fetchSingle((int)$GET['id']);
+            $data = $classLoader->fetchSingle((int)$GET['id']);
             $data = $data[0];
             if (isset($GET['edit']))
             {
                 //go to edit page
                 $teacherData = $teacherLoader->fetchAll();
                 //go to class edit page
-                require 'View/TeachersEditView.php';
+                require 'View/ClassesEditView.php';
             }
             else
             {
                 $teacherData = $teacherLoader->fetchAll();
                 //go to class edit page
-                require 'View/TeachersDetailView.php';
+                require 'View/ClassesDetailView.php';
             }
         }
     }

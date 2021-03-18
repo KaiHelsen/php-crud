@@ -1,0 +1,32 @@
+body {
+    background-color: #16232e;
+    /*background-image: url("img/coding.jpg") ;*/
+    color: #ebf3eb;
+}
+
+#home {
+    padding : 10rem;
+}
+.icon {
+    display: block;
+}
+.overlay {
+    position: absolute;
+    bottom: 0;
+    width:100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgba(22, 35, 46,0.5);
+    color:whitesmoke;
+    font-size: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.col-sm-3:hover .overlay {
+    opacity: 1;
+}
+
+a {
+    color: whitesmoke;
+}

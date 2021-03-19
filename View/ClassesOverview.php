@@ -3,48 +3,67 @@ declare(strict_types=1);
 include_once "includes/header.php";
 ?>
     <section>
-        <b>Testing class overview</b>
+        <h1>Testing class overview</h1>
         <!--here we should generate an overview of classes that are loaded from the database-->
-        <table>
-            <thead>
-            <tr>
-                <th>Class Name</th>
-                <th>Assigned Teacher</th>
-                <th>location</th>
-                <th>Student count</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($data as $i => $myClass) : ?>
+        <div class="container">
+            <table class="table table-striped table-dark">
+                <thead>
                 <tr>
-                    <td><?php echo $myClass['className']; ?> </td>
-                    <td><?php echo $myClass['assignedTeacher']; ?> </td>
-                    <td><?php echo $myClass['town']; ?> </td>
-                    <td><?php echo $myClass['studentCount'] ?: 'none'; ?></td>
-                    <td><a href="?id=<?php echo $myClass['id'] ?>"></a></td>
-
-                    <td><form method='GET'>
-                            <input type="hidden" name="page" value="<?php echo htmlspecialchars($GET['page'])?>">
-                            <button type="submit" name="id" value="<?php echo $myClass['id'];?>">more info</button>
-                        </form></td>
-                    <td><form method='GET'>
-                            <input type="hidden" name="page" value="<?php echo htmlspecialchars($GET['page'])?>">
-                            <input type="hidden" name="edit">
-                            <button type="submit" name="id" value="<?php echo $myClass['id'];?>">edit</button>
-                        </form></td>
-                    <td><form method='POST'>
-                            <input type="hidden" name="page" value="<?php echo htmlspecialchars($GET['page'])?>">
-                            <input type="hidden" name="action" value="delete">
-                            <button type="submit" name="id" value="<?php echo $myClass['id'];?>">delete</button>
-                        </form></td>
+                    <th scope="col">Class Name</th>
+                    <th scope="col">Assigned Teacher</th>
+                    <th scope="col">location</th>
+                    <th scope="col">Student count</th>
                 </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-        <br>
-        <a href="?page=<?php echo CLASSES;?>&create=">create new?</a>
-        <a href="?page=<?php echo CLASSES;?>&export=CSV">Export as CSV</a>
+                </thead>
+                <tbody>
+                <?php foreach ($data as $i => $myClass) : ?>
+                    <tr>
+                        <th scope="row">
+                        <td><?php echo $myClass['className']; ?> </td>
+                        <td><?php echo $myClass['assignedTeacher']; ?> </td>
+                        <td><?php echo $myClass['town']; ?> </td>
+                        <td><?php echo $myClass['studentCount'] ?: 'none'; ?></td>
+                        <td><a href="?id=<?php echo $myClass['id'] ?>"></a></td>
 
+                        <td>
+                            <form method='GET'>
+                                <input type="hidden" name="page" value="<?php echo htmlspecialchars($GET['page']) ?>">
+                                <button type="submit" name="id" class="btn btn-light"
+                                        value="<?php echo $myClass['id']; ?>">
+                                    more info
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method='GET'>
+                                <input type="hidden" name="page" value="<?php echo htmlspecialchars($GET['page']) ?>">
+                                <input type="hidden" name="edit">
+                                <button type="submit" name="id" class="btn btn-secondary"
+                                        value="<?php echo $myClass['id']; ?>">edit
+                                </button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method='POST'>
+                                <input type="hidden" name="page" value="<?php echo htmlspecialchars($GET['page']) ?>">
+                                <input type="hidden" name="action" value="delete">
+                                <button type="submit" name="id" class="btn btn-danger"
+                                        value="<?php echo $myClass['id']; ?>">delete
+                                </button>
+                            </form>
+                        </td>
+                        </th>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+            <br>
+            <div class="extra-button">
+                <button class="btn btn-primary"><a href="?page=<?php echo CLASSES; ?>&create=">create new?</a></button>
+                <button class="btn btn-primary"><a href="?page=<?php echo CLASSES; ?>&export=CSV">Export as CSV</a>
+                </button>
+            </div>
+        </div>
     </section>
 
 <?php require 'includes/footer.php'; ?>

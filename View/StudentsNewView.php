@@ -12,7 +12,7 @@ include_once "includes/header.php";
     <div>Here you can create a new Student!</div>
     <br>
 
-    <div class="container-new">
+    <div class="container">
         <form method="POST">
             <span><label for="firstName">Student's First Name</label></span>
             <!--    --><?php //var_dump($data);?>

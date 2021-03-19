@@ -9,6 +9,7 @@ include_once "includes/header.php";
     <div>Here you can edit a class!</div>
     <br>
     <body>
+    <div class="container">
     <form method="POST">
         <span><label for="name">Class Name</label></span>
         <!--    --><?php //var_dump($data);?>
@@ -32,9 +33,10 @@ include_once "includes/header.php";
         <br>
         <div>
             <input type="hidden" name="id" value="<?php echo $data['classId']; ?>">
-            <button type="submit" name="action" id="action" value="edit">Update!</button>
+            <button type="submit" name="action" id="action" class="btn btn-success" value="edit">Update!</button>
         </div>
     </form>
+    </div>
     </body>
 </section>
 

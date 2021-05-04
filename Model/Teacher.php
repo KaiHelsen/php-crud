@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 include_once "Entity.php";
 
 class Teacher extends Entity
@@ -15,7 +16,6 @@ class Teacher extends Entity
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
-
     }
 
     public function getId(): int
@@ -37,6 +37,4 @@ class Teacher extends Entity
     {
         return $this->email;
     }
-
-
 }
